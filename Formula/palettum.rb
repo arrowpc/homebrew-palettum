@@ -17,6 +17,7 @@ class Palettum < Formula
   depends_on "libpng"
   depends_on "webp"
   depends_on "pybind11"
+  depends_on "simde"
 
   # Python dependencies
   resource "rich-click" do
