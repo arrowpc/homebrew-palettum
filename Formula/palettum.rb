@@ -1,8 +1,8 @@
 class Palettum < Formula
   desc "Core functionality for the Palettum project"
   homepage "https://github.com/ArrowPC/palettum/"
-  url "https://files.pythonhosted.org/packages/e5/23/4d534b5fdf2a8323def953d6890c19a82cf7a0b881ada3597b68fdec4e34/palettum-0.4.1.tar.gz"
-  sha256 "0a93e40d082ad73b82fc0c219ca340690c2c8a43892143f69bdbe5021b6cd568"
+  url "https://files.pythonhosted.org/packages/9e/c6/c09cea886a2e765b8587983254bae846c3c2fac87c27736a9d4c3d8650a1/palettum-0.4.2.tar.gz"
+  sha256 "9ba695fe3c4e3bdb79d2da7ea460ff2304498592f40127930943e054cda82a92"
   license "AGPL-3.0-only"
 
   depends_on "cmake" => :build
@@ -91,7 +91,11 @@ class Palettum < Formula
         system "install_name_tool", "-id", correct_path, target_dylib_path
       end
     end
-    
+
     bin.install_symlink libexec/"bin/palettum"
+  end
+
+  test do
+    assert_match "palettum #{version}", shell_output("#{bin}/palettum --version")
   end
 end
