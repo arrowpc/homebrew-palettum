@@ -1,8 +1,8 @@
 class Palettum < Formula
   desc "Core functionality for the Palettum project"
   homepage "https://github.com/ArrowPC/palettum/"
-  url "https://files.pythonhosted.org/packages/9e/c6/c09cea886a2e765b8587983254bae846c3c2fac87c27736a9d4c3d8650a1/palettum-0.4.2.tar.gz"
-  sha256 "9ba695fe3c4e3bdb79d2da7ea460ff2304498592f40127930943e054cda82a92"
+  url "https://files.pythonhosted.org/packages/b6/03/a2b7353e0d8b4600b2d15d09c253290db27ae8c54798079e8eb0cdb8159f/palettum-0.4.3.tar.gz"
+  sha256 "007e59b597b33cb0ed4ae85502df7466a6f1741bcdedd473fda12bcc89dfcc07"
   license "AGPL-3.0-only"
 
   depends_on "cmake" => :build
