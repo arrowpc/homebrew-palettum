@@ -16,7 +16,6 @@ class Palettum < Formula
   depends_on "libomp"
   depends_on "libpng"
   depends_on "webp"
-  depends_on "pybind11"
   depends_on "simde"
 
   # Python dependencies
@@ -48,6 +47,10 @@ class Palettum < Formula
     url "https://files.pythonhosted.org/packages/76/ad/cd3e3465232ec2416ae9b983f27b9e94dc8171d56ac99b345319a9475967/typing_extensions-4.13.1.tar.gz"
     sha256 "98795af00fb9640edec5b8e31fc647597b4691f099ad75f469a2616be1a76dff"
   end
+  resource "pybind11-global" do
+    url "https://files.pythonhosted.org/packages/73/64/0c8b282908a6b2d6140bcffad9a6eceecdb64379d388a8d4bea938cfc54d/pybind11_global-2.13.6.tar.gz"
+    sha256 "cf5f33432817eadd21077e4af037af134261d4527308cb3995dfbb4f3239aa87"
+  end
 
   include Language::Python::Virtualenv
 
@@ -61,9 +64,11 @@ class Palettum < Formula
       venv.pip_install r
     end
 
+    pybind11_cmake_path = libexec/"lib/python3.12/site-packages/pybind11_global-2.13.6.data/data/share/cmake/pybind11"
+    ENV["CMAKE_PREFIX_PATH"] = pybind11_cmake_path
+
     venv.pip_install buildpath
 
-    # Fix linkage for the mtpng library
     dylib_name = "libmtpng.dylib"
     so_name = "palettum.cpython-#{Language::Python.major_minor_version(python_version).to_s.delete(".")}-darwin.so"
     installed_so_path = palettum_pkg_dir/so_name
@@ -72,24 +77,21 @@ class Palettum < Formula
       buildpath/"external/mtpng/target/release/deps"/dylib_name,
       buildpath/"external/mtpng/target/release"/dylib_name
     ]
-    
+
     source_dylib_path = source_paths.find(&:exist?)
     if source_dylib_path
       target_dylib_path = palettum_pkg_dir/dylib_name
       cp source_dylib_path, target_dylib_path
-      
-      # Get current linkage
+
       otool_output = Utils.safe_popen_read("otool", "-L", installed_so_path)
       bad_path_line = otool_output.lines.find { |line| line.include?(source_dylib_path.to_s) }
-      
+
       if bad_path_line
         original_path = bad_path_line.strip.split(" ")[0]
         correct_path = "@loader_path/#{dylib_name}"
-        
-        # Fix the linkage in the .so file
+
         system "install_name_tool", "-change", original_path, correct_path, installed_so_path
-        
-        # Set the id of the dylib itself
+
         system "install_name_tool", "-id", correct_path, target_dylib_path
       end
     end
