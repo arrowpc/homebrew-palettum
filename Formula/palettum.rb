@@ -1,8 +1,8 @@
 class Palettum < Formula
   desc "Core functionality for the Palettum project"
   homepage "https://github.com/ArrowPC/palettum/"
-  url "https://test-files.pythonhosted.org/packages/87/5e/f7d8a4b404d1c38476bf877adb38bb2039eb86a1fef1ac688b7dde89c475/palettum-0.4.5.tar.gz"
-  sha256 "ac3806fb8bc828a46782bd330413203b88afae12b6d0ade692c586fe203ad060"
+  url "https://test-files.pythonhosted.org/packages/20/13/cdbb59a6a5c877feb52748f8e21537709de823b981ce18d4e0992fa483da/palettum-0.4.6.tar.gz"
+  sha256 "f56408527414a49b6c3159601503d781b8a41189175c726ed440d083f0586b1a"
   license "AGPL-3.0-only"
 
   depends_on "cmake" => :build
@@ -11,7 +11,7 @@ class Palettum < Formula
   depends_on "python@3.12"
 
   # Runtime C++ Dependencies
-  depends_on "giflib"
+  depends_on "arrowpc/palettum/giflib@5.2.1"
   depends_on "jpeg-turbo"
   depends_on "libomp"
   depends_on "libpng"
@@ -53,6 +53,12 @@ class Palettum < Formula
   include Language::Python::Virtualenv
 
   def install
+    giflib_prefix = Formula["arrowpc/palettum/giflib@5.2.1"].opt_prefix
+    ENV.prepend_path "PKG_CONFIG_PATH", "#{giflib_prefix}/lib/pkgconfig"
+    ENV["GIFLIB_PREFIX"] = giflib_prefix.to_s
+    ENV["GIF_LIBRARY"] = "#{giflib_prefix}/lib/libgif.dylib"
+    ENV["GIF_INCLUDE_DIR"] = "#{giflib_prefix}/include"
+
     python_version = "python3.12"
     venv = virtualenv_create(libexec, python_version)
     site_packages = Language::Python.site_packages(python_version)
