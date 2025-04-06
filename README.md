@@ -1,6 +1,3 @@
-> [!IMPORTANT]
-> Not functioning currently
-
 # homebrew-palettum
 
 To install [Palettum](https://github.com/arrowpc/palettum) using Homebrew:
