@@ -1,8 +1,8 @@
 class Palettum < Formula
   desc "Core functionality for the Palettum project"
   homepage "https://github.com/ArrowPC/palettum/"
-  url "https://files.pythonhosted.org/packages/f5/55/1e6b024bd86acb0067e2b455f7188c683d5e640ad3a01c69c6cdb71cefb3/palettum-0.4.4.tar.gz"
-  sha256 "bed41368808e33966da8848127c6992755317e5760e122c6d69eb798f903ebb0"
+  url "https://test-files.pythonhosted.org/packages/87/5e/f7d8a4b404d1c38476bf877adb38bb2039eb86a1fef1ac688b7dde89c475/palettum-0.4.5.tar.gz"
+  sha256 "ac3806fb8bc828a46782bd330413203b88afae12b6d0ade692c586fe203ad060"
   license "AGPL-3.0-only"
 
   depends_on "cmake" => :build
@@ -17,6 +17,7 @@ class Palettum < Formula
   depends_on "libpng"
   depends_on "webp"
   depends_on "simde"
+  depends_on "pybind11"
 
   # Python dependencies
   resource "rich-click" do
@@ -47,10 +48,6 @@ class Palettum < Formula
     url "https://files.pythonhosted.org/packages/76/ad/cd3e3465232ec2416ae9b983f27b9e94dc8171d56ac99b345319a9475967/typing_extensions-4.13.1.tar.gz"
     sha256 "98795af00fb9640edec5b8e31fc647597b4691f099ad75f469a2616be1a76dff"
   end
-  resource "pybind11-global" do
-    url "https://files.pythonhosted.org/packages/73/64/0c8b282908a6b2d6140bcffad9a6eceecdb64379d388a8d4bea938cfc54d/pybind11_global-2.13.6.tar.gz"
-    sha256 "cf5f33432817eadd21077e4af037af134261d4527308cb3995dfbb4f3239aa87"
-  end
 
   include Language::Python::Virtualenv
 
@@ -63,9 +60,6 @@ class Palettum < Formula
     resources.each do |r|
       venv.pip_install r
     end
-
-    pybind11_cmake_path = libexec/"lib/python3.12/site-packages/pybind11_global-2.13.6.data/data/share/cmake/pybind11"
-    ENV["CMAKE_PREFIX_PATH"] = pybind11_cmake_path
 
     venv.pip_install buildpath
 
