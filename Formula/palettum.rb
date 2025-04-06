@@ -1,8 +1,8 @@
 class Palettum < Formula
   desc "Core functionality for the Palettum project"
   homepage "https://github.com/ArrowPC/palettum/"
-  url "https://test-files.pythonhosted.org/packages/20/13/cdbb59a6a5c877feb52748f8e21537709de823b981ce18d4e0992fa483da/palettum-0.4.6.tar.gz"
-  sha256 "f56408527414a49b6c3159601503d781b8a41189175c726ed440d083f0586b1a"
+  url "https://test-files.pythonhosted.org/packages/d2/90/ae36d66679fa72b832ccfaa1abe1af3c722f89a5a488df03dcbe869c61f7/palettum-0.4.7.tar.gz"
+  sha256 "d2e72b7dc0b634fda3793025d65853942c16b18eb3523278c37176714f1e54bc"
   license "AGPL-3.0-only"
 
   depends_on "cmake" => :build
@@ -54,10 +54,13 @@ class Palettum < Formula
 
   def install
     giflib_prefix = Formula["arrowpc/palettum/giflib@5.2.1"].opt_prefix
+    libpng_prefix = Formula["libpng"].opt_prefix
     ENV.prepend_path "PKG_CONFIG_PATH", "#{giflib_prefix}/lib/pkgconfig"
     ENV["GIFLIB_PREFIX"] = giflib_prefix.to_s
     ENV["GIF_LIBRARY"] = "#{giflib_prefix}/lib/libgif.dylib"
     ENV["GIF_INCLUDE_DIR"] = "#{giflib_prefix}/include"
+    ENV["PNG_LIBRARY"] = "#{libpng_prefix}/lib/libpng.dylib"
+    ENV["PNG_INCLUDE_DIR"] = "#{libpng_prefix}/include"
 
     python_version = "python3.12"
     venv = virtualenv_create(libexec, python_version)
