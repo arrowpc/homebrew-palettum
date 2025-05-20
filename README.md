@@ -8,4 +8,4 @@ To install [Palettum](https://github.com/arrowpc/palettum) using Homebrew:
 Test it out:
 
     $ palettum --version
-    palettum 0.5.0
+    palettum 0.5.1
