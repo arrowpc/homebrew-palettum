@@ -2,17 +2,20 @@ class Palettum < Formula
   desc "CLI tool that recolors images & GIFs with any palette"
   homepage "https://github.com/ArrowPC/palettum/"
   license "AGPL-3.0-only"
-  version "0.5.2"
+  version "0.6.0"
+
+  depends_on "ffmpeg"
+  depends_on "pkg-config"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/arrowpc/palettum/releases/download/v0.5.2/palettum-macOS-x86_64.tar.gz"
-      sha256 "18cd88844063edd6157a84f282d2d1bc7de871c76cc007709898656d4efe453e"
+      url "https://github.com/arrowpc/palettum/releases/download/v0.6.0/palettum-x86_64-apple-darwin-video-gpu.tar.gz"
+      sha256 "06de4038090e734cad202f07bdaff9d6a9b62fe37ccfdd363a7aecc11e66102e"
     end
 
     if Hardware::CPU.arm?
-      url "https://github.com/arrowpc/palettum/releases/download/v0.5.2/palettum-macOS-arm64.tar.gz"
-      sha256 "4b9732ffea1110851a510bec30fd4adc5e9c532a76b5c7a57c66fcc7dc3c16eb"
+      url "https://github.com/arrowpc/palettum/releases/download/v0.6.0/palettum-aarch64-apple-darwin-video-gpu.tar.gz"
+      sha256 "982a3117e2f802486de2a130491639211486854c2b077dbae592bb8d1dfa6b91"
     end
   end
 
